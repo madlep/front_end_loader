@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+OUTPUT_DIR=tmp/example_logs
+
+for i in {1..3} 
+do
+  scp juliand@log.is.prod.lpo:/var/log/app0$i.atlas-repo.prod.lpo/2011-03-23/local1.info $OUTPUT_DIR/app0$i.atlas-repo.prod.lpo.syslog
+done

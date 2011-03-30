@@ -1,0 +1,23 @@
+#!/usr/bin/env sh
+OUTPUT_DIR=tmp/example_logs
+
+ATLAS_APP_SYSLOGS=$OUTPUT_DIR/app*.atlas-repo.prod.lpo.syslog
+ATLAS_SYSLOG=$OUTPUT_DIR/atlas-repo.prod.lpo.syslog
+ATLAS_LOG=$OUTPUT_DIR/atlas-repo.prod.lpo.log
+
+# clean stuff up first to be safe
+rm -f $ATLAS_SYSLOG
+rm -f $ATLAS_LOG
+
+# merge the syslog files together
+# cat $OUTPUT_DIR/app0*.atlas-repo.prod.lpo.syslog > $ATLAS_SYSLOG
+
+# merge sort app server files by month-date into combined syslog file
+sort --month-sort --merge --output=$ATLAS_SYSLOG $ATLAS_APP_SYSLOGS
+
+# convert the combined syslog file to apache common log by stripping syslog meta-data
+# assuming username is alphanumeric, followed by : and space character - and everything after that is CLF data
+sed -E 's/.*[A-Za-z0-9]+: //' $ATLAS_SYSLOG > $ATLAS_LOG
+
+# post clean up
+rm -f $ATLAS_SYSLOG

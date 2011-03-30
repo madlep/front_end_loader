@@ -1,0 +1,12 @@
+{application, fel,
+ [
+  {description, "Front End Loader"},
+  {vsn, "0.0.1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { fel_app, []}},
+  {env, []}
+ ]}.

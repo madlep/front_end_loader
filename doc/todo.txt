@@ -1,0 +1,14 @@
+- load multiple apache log files
+- replay GET requests sorted in time order (across all files)
+  - at the rate they run at (realtime)
+  - or just hammer them
+- generate log of POST/PUT/DELETE (non-GET) requests
+  - have some way of reporting on what manually crafted requests are required
+- have some lightweight DSL for declaring crafted requests
+  - intersperse requests with log playback
+- track response times for URLs
+  - Aggregate by heirarchy
+  - pump out to some reporting DB
+- web UI for analysing
+- manage thresholds for URLs
+  - break execution if thresholds exceeded (for load testing)
