@@ -142,7 +142,7 @@ to_i(S) ->
   end.
   
 create_request(nomatch) ->
-  nomatch;
+  #request{};
 create_request([Method, Path, HttpVersion]) ->
   #request{method=Method, path=Path, http_version=HttpVersion};
 create_request([Method, Path]) ->
