@@ -103,7 +103,7 @@ create_log_line(Line, Parsers = #ffr_parsers{}) ->
     host              = blank_to_undefined(Host), 
     remote_logname    = blank_to_undefined(RemoteLogname), 
     remote_user       = blank_to_undefined(RemoteUser), 
-    time              = parse_date_time(TimeParser(Time)), 
+    time              = create_date_time(TimeParser(Time)), 
     request           = create_request(RequestParser(Request)), 
     status            = to_i(binary_to_list(Status)), 
     response_bytesize = to_i(binary_to_list(ResponseBytesize)), 
@@ -116,8 +116,7 @@ blank_to_undefined(<<"-">>) ->
 blank_to_undefined(Anything) ->
   Anything.
   
-parse_date_time([DateStr, MonthStr, YearStr, HourStr, MinuteStr, SecondStr, "+0000"]) ->
-  % 23/Mar/2011:00:00:01 +0000
+create_date_time([DateStr, MonthStr, YearStr, HourStr, MinuteStr, SecondStr, "+0000"]) ->
   Date = {to_i(YearStr), to_i(MonthStr), to_i(DateStr)},  
   Time = {to_i(HourStr), to_i(MinuteStr), to_i(SecondStr)},  
   {Date, Time}.
