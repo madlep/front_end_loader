@@ -10,7 +10,8 @@ read_all_from_file(FileReaderPid) ->
   read_all_from_file(fel_file_reader:get_next_request(FileReaderPid), FileReaderPid).
   
 read_all_from_file(eof, _FileReaderPid) ->
-  io:format("~neof. Done!~n");
+  io:format("~neof. Done!~n"),
+  halt();
 read_all_from_file(Line, FileReaderPid) ->
   io:format("~p~n", [Line]),
   read_all_from_file(fel_file_reader:get_next_request(FileReaderPid), FileReaderPid).
