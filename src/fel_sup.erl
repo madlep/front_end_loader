@@ -4,7 +4,7 @@
 -behaviour(supervisor).
 
 %% API
--export([start_link/0]).
+-export([start_link/1]).
 
 %% Supervisor callbacks
 -export([init/1]).
@@ -16,13 +16,16 @@
 %% API functions
 %% ===================================================================
 
-start_link() ->
-    supervisor:start_link({local, ?MODULE}, ?MODULE, []).
+start_link(LogFileName) ->
+  supervisor:start_link(?MODULE, [LogFileName]).
 
 %% ===================================================================
 %% Supervisor callbacks
 %% ===================================================================
 
-init([]) ->
-    {ok, { {one_for_one, 5, 10}, []} }.
+init([LogFileName]) ->
+  % TODO - need to handle restarts at point in time where file reader died
+  {ok, { {one_for_one, 5, 10}, [
+    {fel_file_reader, {fel_file_reader, start_link, [LogFileName]}, temporary, brutal_kill, [fel_file_reader]}
+  ]} }.
 
